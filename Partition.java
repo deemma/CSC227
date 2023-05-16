@@ -1,6 +1,6 @@
 public class Partition {
-    
-    private boolean status; // true if available false if allocated
+
+    private String status; 
     private int startAddress;
     private int endAddress;
     private int fragmentSize;
@@ -8,23 +8,35 @@ public class Partition {
     private String processNum;
     private int processSize;
 
-    public Partition(boolean status, int startAddress, int endAddress, int partitionSize, String processNum) {
-        this.status = false;
+
+
+    public Partition(int startAddress, int endAddress, int partitionSize) {
+        this.status = "free";
         this.startAddress = startAddress;
         this.endAddress = endAddress;
         this.fragmentSize = -1;
         this.partitionSize = partitionSize;
-        this.processNum = "null"; // or should we actually make it null?;
+        this.processNum = "Null"; 
     }
 
-    public void calculateFragment() {
-        if (!this.processNum.equals("null") && this.status == false) {
-            int fragment = this.partitionSize - this.processSize;
-            this.setFragmentSize(fragment);
-        }
+    // public void calculateInternalFragment() {
+    //     if (!this.processNum.equals("Null") && this.status.equals("allocated")) {
+    //         int fragment = this.partitionSize - this.processSize;
+    //         this.setFragmentSize(fragment);
+    //     }
+    // }
+
+    public String toString() {
+        String partitionDetails = String.format(" | The Size of Partition: %-5d", this.partitionSize);
+        partitionDetails += String.format(" | The Partition Status:%-5s", this.status);
+        partitionDetails += String.format(" | The Process Number: %-5s", this.processNum);
+        partitionDetails += String.format(" | The Fragmentation Size: %-5s", this.fragmentSize);
+        partitionDetails += String.format(" | Starting Address:%-9d (bytes)", this.startAddress);
+        partitionDetails += String.format(" | Ending Address:%-8d (bytes) \n", this.endAddress);
+        return partitionDetails;
     }
 
-    public boolean isStatus() {
+    public String getStatus() {
         return status;
     }
 
@@ -40,7 +52,7 @@ public class Partition {
         return fragmentSize;
     }
 
-    public int getPartition() {
+    public int getPartitionSize() {
         return partitionSize;
     }
 
@@ -52,7 +64,7 @@ public class Partition {
         return processSize;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
