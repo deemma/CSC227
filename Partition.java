@@ -1,5 +1,5 @@
 public class Partition {
-
+    
     private boolean status; // true if available false if allocated
     private int startAddress;
     private int endAddress;
