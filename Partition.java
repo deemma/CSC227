@@ -4,22 +4,22 @@ public class Partition {
     private int startAddress;
     private int endAddress;
     private int fragmentSize;
-    private int partition;
+    private int partitionSize;
     private String processNum;
     private int processSize;
 
-    public Partition(boolean status, int startAddress, int endAddress, int partition, String processNum) {
+    public Partition(boolean status, int startAddress, int endAddress, int partitionSize, String processNum) {
         this.status = false;
         this.startAddress = startAddress;
         this.endAddress = endAddress;
         this.fragmentSize = -1;
-        this.partition = partition;
+        this.partitionSize = partitionSize;
         this.processNum = "null"; // or should we actually make it null?;
     }
 
     public void calculateFragment() {
-        if (!this.processNum.equals("Null") && this.status == false) {
-            int fragment = this.partition - this.processSize;
+        if (!this.processNum.equals("null") && this.status == false) {
+            int fragment = this.partitionSize - this.processSize;
             this.setFragmentSize(fragment);
         }
     }
@@ -41,7 +41,7 @@ public class Partition {
     }
 
     public int getPartition() {
-        return partition;
+        return partitionSize;
     }
 
     public String getProcessNum() {
@@ -69,7 +69,7 @@ public class Partition {
     }
 
     public void setPartition(int partition) {
-        this.partition = partition;
+        this.partitionSize = partition;
     }
 
     public void setProcessNum(String processNum) {
