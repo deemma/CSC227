@@ -84,16 +84,12 @@ public class Main {
                     // Allocate memory block
                     try {
                         System.out.print("Enter process ID as (PN): ");
-                        String processId = scanner.next();
-                        char p = processId.charAt(0);
-                        if(!(p == 'p' || p == 'P'))
-                        throw new Exception("the name must start with a P");
+                        String processId = "P" + scanner.next();
                         try {
                             int num = Integer.parseInt(processId.substring(1));
                             if(num < 0)
                             throw new Exception();
                         }
-                        
                         catch(Exception e){
                             System.out.println("the foramt should be PN, N beign a positave number");
                         }
