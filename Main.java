@@ -100,27 +100,23 @@ public class Main {
                             throw new Exception("Process size must be a positive integer ");
                         }
                    
-                        // Find a partition to allocate memory from using the selected allocation strategy
-                        int partitionIndex = -1;
+                        Boolean allocated = false;
+                        //Allocate memory from using the selected allocation strategy
                         switch (strategy) {
                             case 'F':
-                                // partitionIndex = findFirstFitPartition(processSize);
+                                // allocated = firstFit(processId ,processSize);
                                 break;
                             case 'B':
-                                // partitionIndex = findBestFitPartition(processSize);
+                                // allocated = bestFit(processId ,processSize);
                                 break;
                             case 'W':
-                                // partitionIndex = findWorstFitPartition(processSize);
+                                // allocated = worsFit(processId ,processSize);
                                 break;
                         }
 
-                        if (partitionIndex == -1) {
+                        if (!allocated) {
                             System.out.println("Error: Not enough memory available to allocate process.");
                         } else {
-                            // Allocate memory to the process 
-                            memory[partitionIndex].setStatus("allocated");
-                            memory[partitionIndex].setProcessNum(processId);
-                            memory[partitionIndex].setFragmentSize(memory[partitionIndex].getPartitionSize()-processSize);
 
                             // Display memory state after allocation
                             System.out.print("Memory state after allocation: [");
