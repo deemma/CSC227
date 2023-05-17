@@ -1,5 +1,6 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.io.*;
 
@@ -47,8 +48,24 @@ public class Main {
                     }
                 }
 
+                char strategy = 'N';
+                boolean flag = true;
 
-                
+                // Prompt user to enter the allocation strategy
+                while(flag){
+                    System.out.print("Enter the allocation strategy (F, B, or W): ");
+                    try{
+                        strategy = scanner.next().toUpperCase().charAt(0);
+                        if(!(strategy == 'F' || strategy == 'B' || strategy == 'W'))
+                        throw new Exception("Input should be f, b or w");
+                        else
+                        flag = false;
+                    }
+                    catch(Exception e){
+                        System.out.println("Invalid input: " + e.getMessage());
+                    }
+                }
+          
 
         // Loop until user chooses to exit
         int choice = 0;
@@ -66,21 +83,26 @@ public class Main {
                 case 1:
                     // Allocate memory block
                     try {
-                        System.out.print("Enter process ID: ");
+                        System.out.print("Enter process ID as (PN): ");
                         String processId = scanner.next();
+                        char p = processId.charAt(0);
+                        if(!(p == 'p' || p == 'P'))
+                        throw new Exception("the name must start with a P");
+                        try {
+                            int num = Integer.parseInt(processId.substring(1));
+                            if(num < 0)
+                            throw new Exception();
+                        }
+                        
+                        catch(Exception e){
+                            System.out.println("the foramt should be PN, N beign a positave number");
+                        }
+
                         System.out.print("Enter process size: ");
                         int processSize = scanner.nextInt();
                         if (processSize < 1) {
                             throw new Exception("Process size must be a positive integer ");
                         }
-
-                        char strategy = 'N';
-        
-                        // Prompt user to enter the allocation strategy
-                        System.out.print("Enter the allocation strategy (F, B, or W): ");
-                        strategy = scanner.next().toUpperCase().charAt(0);
-                        if(!(strategy == 'F' || strategy == 'B' || strategy == 'W'))
-                        throw new Exception("Input should be f, b or w");
                    
                         // Find a partition to allocate memory from using the selected allocation strategy
                         int partitionIndex = -1;
@@ -144,7 +166,7 @@ public class Main {
                                 System.out.print("Memory state after de-allocation: [");
                                 for (int j = 0; j < M; j++) {
                                     if (memory[j].getStatus().equals("allocated")) {
-                                        System.out.print("P" + memory[j].getProcessNum());
+                                        System.out.print(memory[j].getProcessNum());
                                     } else {
                                         System.out.print("H");
                                     }
