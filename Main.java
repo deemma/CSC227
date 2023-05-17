@@ -35,8 +35,8 @@ public class Main {
                 for (int i = 0; i < M; i++) {
                     System.out.print("Partition " + (i+1) + ": ");
                     try {
-                        int size = scanner.nextInt();
-                        if (size < 1) {
+                        KB = scanner.nextInt();
+                        if (KB < 1) {
                             throw new Exception("Partition size must be a positive integer.");
                         }
                         end = start + (KB * 1024) - 1;
@@ -83,7 +83,7 @@ public class Main {
                 case 1:
                     // Allocate memory block
                     try {
-                        System.out.print("Enter process ID as (PN): ");
+                        System.out.print("Enter process ID as: ");
                         String processId = "P" + scanner.next();
                         try {
                             int num = Integer.parseInt(processId.substring(1));
@@ -91,7 +91,7 @@ public class Main {
                             throw new Exception();
                         }
                         catch(Exception e){
-                            System.out.println("the foramt should be PN, N beign a positave number");
+                            System.out.println("Process ID must be a positive integer");
                         }
 
                         System.out.print("Enter process size: ");
@@ -122,7 +122,7 @@ public class Main {
                             System.out.print("Memory state after allocation: [");
                             for (int i = 0; i < M; i++) {
                                 if (memory[i].getStatus().equals("allocated")) {
-                                    System.out.print("P" + memory[i].getProcessNum());
+                                    System.out.print(memory[i].getProcessNum());
                                 } else {
                                     System.out.print("H");
                                 }
@@ -140,8 +140,9 @@ public class Main {
                     // De-allocate memory block
                     try {
                         System.out.print("Enter process ID to release): ");
-                        int processId = scanner.nextInt();
-                        if (processId < 1 ) {
+                        String processId = "P" + scanner.next();
+                        int validate = Integer.parseInt(processId.substring(1));
+                        if (validate < 1 ) {
                             throw new Exception("Process ID must be a positive integer");
                         }
 
