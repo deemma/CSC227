@@ -1,6 +1,6 @@
 public class Partition {
 
-    private String status; 
+    private String status;
     private int startAddress;
     private int endAddress;
     private int fragmentSize;
@@ -8,23 +8,21 @@ public class Partition {
     private String processNum;
     private int processSize;
 
-
-
     public Partition(int startAddress, int endAddress, int partitionSize) {
         this.status = "free";
         this.startAddress = startAddress;
         this.endAddress = endAddress;
         this.fragmentSize = -1;
         this.partitionSize = partitionSize;
-        this.processNum = "Null"; 
+        this.processNum = "Null";
     }
 
-    // public void calculateInternalFragment() {
-    //     if (!this.processNum.equals("Null") && this.status.equals("allocated")) {
-    //         int fragment = this.partitionSize - this.processSize;
-    //         this.setFragmentSize(fragment);
-    //     }
-    // }
+    public void calculateInternalFragment() {
+        if (!this.processNum.equals("Null") && this.status.equals("allocated")) {
+            int fragment = this.partitionSize - this.processSize;
+            this.setFragmentSize(fragment);
+        }
+    }
 
     public String toString() {
         String partitionDetails = String.format(" | The Size of Partition: %-5d", this.partitionSize);

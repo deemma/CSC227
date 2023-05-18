@@ -4,68 +4,65 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.io.*;
 
-
 public class Main {
 
     private static int M;
     private static int KB;
-    private static Partition [] memory ;
+    private static Partition[] memory;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-                // Prompt user to enter the number of partitions
-                System.out.print("Enter the number of partitions: ");
-                try {
-                    M = scanner.nextInt();
-                    if (M < 1 ) {
-                        throw new Exception("Number of partitions must be a positive integer between 1 and ");
-                    }
-                } catch (Exception e) {
-                    System.out.println("Invalid input: " + e.getMessage());
-                    return;
-                }
-        
-                // Prompt user to enter the size of each partition
-                System.out.println("Enter the size of each partition in KB:");
-                memory = new Partition[M];
-                int start = 0;
-		        int end = 0;
+        // Prompt user to enter the number of partitions
+        System.out.print("Enter the number of partitions: ");
+        try {
+            M = scanner.nextInt();
+            if (M < 1) {
+                throw new Exception("Number of partitions must be a positive integer between 1 and ");
+            }
+        } catch (Exception e) {
+            System.out.println("Invalid input: " + e.getMessage());
+            return;
+        }
 
-                for (int i = 0; i < M; i++) {
-                    System.out.print("Partition " + (i+1) + ": ");
-                    try {
-                        KB = scanner.nextInt();
-                        if (KB < 1) {
-                            throw new Exception("Partition size must be a positive integer.");
-                        }
-                        end = start + (KB * 1024) - 1;
-                        memory[i] = new Partition(start, end, KB);
-                        start = memory[i].getEndAddress() + 1;
-                    } catch (Exception e) {
-                        System.out.println("Invalid input: " + e.getMessage());
-                        return;
-                    }
-                }
+        // Prompt user to enter the size of each partition
+        System.out.println("Enter the size of each partition in KB:");
+        memory = new Partition[M];
+        int start = 0;
+        int end = 0;
 
-                char strategy = 'N';
-                boolean flag = true;
-
-                // Prompt user to enter the allocation strategy
-                while(flag){
-                    System.out.print("Enter the allocation strategy (F, B, or W): ");
-                    try{
-                        strategy = scanner.next().toUpperCase().charAt(0);
-                        if(!(strategy == 'F' || strategy == 'B' || strategy == 'W'))
-                        throw new Exception("Input should be f, b or w");
-                        else
-                        flag = false;
-                    }
-                    catch(Exception e){
-                        System.out.println("Invalid input: " + e.getMessage());
-                    }
+        for (int i = 0; i < M; i++) {
+            System.out.print("Partition " + (i + 1) + ": ");
+            try {
+                KB = scanner.nextInt();
+                if (KB < 1) {
+                    throw new Exception("Partition size must be a positive integer.");
                 }
-          
+                end = start + (KB * 1024) - 1;
+                memory[i] = new Partition(start, end, KB);
+                start = memory[i].getEndAddress() + 1;
+            } catch (Exception e) {
+                System.out.println("Invalid input: " + e.getMessage());
+                return;
+            }
+        }
+
+        char strategy = 'N';
+        boolean flag = true;
+
+        // Prompt user to enter the allocation strategy
+        while (flag) {
+            System.out.print("Enter the allocation strategy (F, B, or W): ");
+            try {
+                strategy = scanner.next().toUpperCase().charAt(0);
+                if (!(strategy == 'F' || strategy == 'B' || strategy == 'W'))
+                    throw new Exception("Input should be f, b or w");
+                else
+                    flag = false;
+            } catch (Exception e) {
+                System.out.println("Invalid input: " + e.getMessage());
+            }
+        }
 
         // Loop until user chooses to exit
         int choice = 0;
@@ -87,10 +84,9 @@ public class Main {
                         String processId = "P" + scanner.next();
                         try {
                             int num = Integer.parseInt(processId.substring(1));
-                            if(num < 0)
-                            throw new Exception();
-                        }
-                        catch(Exception e){
+                            if (num < 0)
+                                throw new Exception();
+                        } catch (Exception e) {
                             System.out.println("Process ID must be a positive integer");
                         }
 
@@ -99,15 +95,15 @@ public class Main {
                         if (processSize < 1) {
                             throw new Exception("Process size must be a positive integer ");
                         }
-                   
+
                         Boolean allocated = false;
-                        //Allocate memory from using the selected allocation strategy
+                        // Allocate memory from using the selected allocation strategy
                         switch (strategy) {
                             case 'F':
                                 // allocated = firstFit(processId ,processSize);
                                 break;
                             case 'B':
-                                // allocated = bestFit(processId ,processSize);
+                                allocated = bestFit(processId, processSize);
                                 break;
                             case 'W':
                                 // allocated = worsFit(processId ,processSize);
@@ -126,7 +122,7 @@ public class Main {
                                 } else {
                                     System.out.print("H");
                                 }
-                                if (i < M-1) {
+                                if (i < M - 1) {
                                     System.out.print(" | ");
                                 }
                             }
@@ -142,14 +138,15 @@ public class Main {
                         System.out.print("Enter process ID to release): ");
                         String processId = "P" + scanner.next();
                         int validate = Integer.parseInt(processId.substring(1));
-                        if (validate < 1 ) {
+                        if (validate < 1) {
                             throw new Exception("Process ID must be a positive integer");
                         }
 
                         // Find the partition that has been allocated to the process and de-allocate it
                         boolean found = false;
                         for (int i = 0; i < M; i++) {
-                            if (memory[i].getStatus().equals("allocated") && memory[i].getProcessNum().equals(processId)) {
+                            if (memory[i].getStatus().equals("allocated")
+                                    && memory[i].getProcessNum().equals(processId)) {
                                 memory[i].setStatus("free");
                                 memory[i].setProcessNum("-1");
                                 memory[i].setFragmentSize(-1);
@@ -163,7 +160,7 @@ public class Main {
                                     } else {
                                         System.out.print("H");
                                     }
-                                    if (j < M-1) {
+                                    if (j < M - 1) {
                                         System.out.print(" | ");
                                     }
                                 }
@@ -205,14 +202,35 @@ public class Main {
                     System.out.println("Invalid input: Please enter a number between 1 and 4.");
             }
         }
-        
-        
+
     }
 
-    //  findFirstFitPartition
+    // findFirstFitPartition
 
     // findBestFitPartition
 
+    static boolean bestFit(String processID, int processSize) {
+        int bestFit = -1;
+        for (int i = 0; i < memory.length; i++) {
+            if (memory[i].getStatus().equals("free") && memory[i].getPartitionSize() >= processSize) {
+                if (bestFit == -1)
+                    bestFit = i;
+
+                else if (memory[i].getPartitionSize() < memory[bestFit].getPartitionSize())
+                    bestFit = i;
+
+            }
+        }
+        if (bestFit != -1) {
+            memory[bestFit].setStatus("allocated");
+            memory[bestFit].setProcessNum(processID);
+            memory[bestFit].setProcessSize(processSize);
+            memory[bestFit].calculateInternalFragment();
+            return true;
+        } else
+            System.out.println("Sorry, there is no free space");
+        return false;
+    }
     // findWorstFitPartition
 
 }
