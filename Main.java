@@ -108,7 +108,7 @@ public class Main {
                                 System.out.println("Allocation done successfully.");
                                 break;
                             case 'W':
-                                // allocated = worsFit(processId ,processSize);
+                                allocated = worstFit(processId ,processSize);
                                 System.out.println("Allocation done successfully.");
                                 break;
                         }
@@ -256,5 +256,26 @@ public class Main {
         return false;
     }
     // findWorstFitPartition
+
+    static boolean worstFit(String processID, int processSize) {
+        int WorstFit = -1;
+        for (int i = 0; i < memory.length; i++) {
+            if (memory[i].getStatus().equals("free") && memory[i].getPartitionSize() >= processSize) {
+                if (WorstFit == -1)
+                	WorstFit = i;
+                else if (memory[i].getPartitionSize() > memory[WorstFit].getPartitionSize())
+                	WorstFit = i;
+
+            }
+        }
+        if (WorstFit != -1) {
+            memory[WorstFit].setStatus("allocated");
+            memory[WorstFit].setProcessNum(processID);
+            memory[WorstFit].setProcessSize(processSize);
+            memory[WorstFit].calculateInternalFragment();
+            return true;
+        } else
+        return false;
+    }
 
 }
