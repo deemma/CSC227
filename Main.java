@@ -100,13 +100,16 @@ public class Main {
                         // Allocate memory from using the selected allocation strategy
                         switch (strategy) {
                             case 'F':
-                                // allocated = firstFit(processId ,processSize);
+                                allocated = firstFit(processId ,processSize);
+                                System.out.println("Allocation done successfully.");
                                 break;
                             case 'B':
                                 allocated = bestFit(processId, processSize);
+                                System.out.println("Allocation done successfully.");
                                 break;
                             case 'W':
                                 // allocated = worsFit(processId ,processSize);
+                                System.out.println("Allocation done successfully.");
                                 break;
                         }
 
@@ -151,6 +154,7 @@ public class Main {
                                 memory[i].setProcessNum("-1");
                                 memory[i].setFragmentSize(-1);
                                 found = true;
+                                System.out.println("De-allocation done successfully.");
 
                                 // Display memory state after de-allocation
                                 System.out.print("Memory state after de-allocation: [");
@@ -206,6 +210,26 @@ public class Main {
     }
 
     // findFirstFitPartition
+
+    static boolean firstFit(String name, int size) {
+
+		boolean allocated = false;
+		for (int i = 0; i < memory.length; i++) {
+			int space = memory[i].getPartitionSize();
+			if ((memory[i].getStatus() != "allocated") && (size <= space)) {
+				memory[i].setStatus("allocated");
+				memory[i].setProcessNum(name);
+				memory[i].setProcessSize(size);
+				memory[i].calculateInternalFragment();
+				allocated = true;
+				break;
+			}
+		}
+
+        return allocated;
+			
+	}
+
 
     // findBestFitPartition
 

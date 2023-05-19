@@ -25,13 +25,13 @@ public class Partition {
     }
 
     public String toString() {
-        String partitionDetails = String.format(" | The Size of Partition: %-5d", this.partitionSize);
-        partitionDetails += String.format(" | The Partition Status:%-5s", this.status);
-        partitionDetails += String.format(" | The Process Number: %-5s", this.processNum);
-        partitionDetails += String.format(" | The Fragmentation Size: %-5s", this.fragmentSize);
-        partitionDetails += String.format(" | Starting Address:%-9d (bytes)", this.startAddress);
-        partitionDetails += String.format(" | Ending Address:%-8d (bytes) \n", this.endAddress);
-        return partitionDetails;
+        String partitionReport = "\n[The Partition Status: " + this.status;
+        partitionReport += "| The Size of Partition: " +  this.partitionSize + "KB";
+        partitionReport += "| Starting Address: " + this.startAddress + "KB";
+        partitionReport += "| Ending Address: " +  this.endAddress + "KB\n";
+        partitionReport += "| The Process ID: " + this.processNum;
+        partitionReport += "| The Internal Fragmentation Size: " +  this.fragmentSize + "]\n";
+        return partitionReport;
     }
 
     public String getStatus() {
