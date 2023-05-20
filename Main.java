@@ -79,17 +79,24 @@ public class Main {
             switch (choice) {
                 case 1:
                     // Allocate memory block
-                    try {
-                        System.out.print("Enter process ID as: ");
-                        String processId = "P" + scanner.next();
-                        try {
-                            int num = Integer.parseInt(processId.substring(1));
-                            if (num < 0)
-                                throw new Exception();
-                        } catch (Exception e) {
-                            System.out.println("Process ID must be a positive integer");
-                        }
 
+                    try {
+                        boolean flagID = false;
+                        String processId ="";
+                        while(!flagID){
+                            System.out.print("Enter process ID as: ");
+                             processId = "P" + scanner.next();
+                            try {
+                                int num = Integer.parseInt(processId.substring(1));
+                                if (num < 0)
+                                    throw new Exception();
+                                else
+                                flagID = true;
+                            } catch (Exception e) {
+                                System.out.println("Process ID must be a positive integer");
+                            }
+                        }
+  
                         System.out.print("Enter process size: ");
                         int processSize = scanner.nextInt();
                         if (processSize < 1) {
@@ -101,21 +108,19 @@ public class Main {
                         switch (strategy) {
                             case 'F':
                                 allocated = firstFit(processId ,processSize);
-                                System.out.println("Allocation done successfully.");
                                 break;
                             case 'B':
                                 allocated = bestFit(processId, processSize);
-                                System.out.println("Allocation done successfully.");
                                 break;
                             case 'W':
                                 allocated = worstFit(processId ,processSize);
-                                System.out.println("Allocation done successfully.");
                                 break;
                         }
 
                         if (!allocated) {
                             System.out.println("Error: Not enough memory available to allocate process.");
                         } else {
+                            System.out.println("Allocation done successfully.");
 
                             // Display memory state after allocation
                             System.out.print("Memory state after allocation: [");

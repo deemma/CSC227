@@ -1,6 +1,6 @@
 
-[The Partition Status: allocated| The Size of Partition: 300KB| Starting Address: 0KB| Ending Address: 307199KB
-| The Process ID: P5| The Internal Fragmentation Size: 25]
+[The Partition Status: free| The Size of Partition: 300KB| Starting Address: 0KB| Ending Address: 307199KB
+| The Process ID: -1| The Internal Fragmentation Size: -1]
 
 
 [The Partition Status: allocated| The Size of Partition: 600KB| Starting Address: 307200KB| Ending Address: 921599KB
