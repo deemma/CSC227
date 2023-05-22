@@ -38,7 +38,7 @@ public class Main {
                 if (KB < 1) {
                     throw new Exception("Partition size must be a positive integer.");
                 }
-                end = start + (KB * 1024) - 1;
+                end = start + (KB) - 1;
                 memory[i] = new Partition(start, end, KB);
                 start = memory[i].getEndAddress() + 1;
             } catch (Exception e) {
